@@ -10,8 +10,12 @@ var mongoose = require('mongoose');
 // Initialize models
 require('./models/models');
 //connection to mongoDB database
-mongoose.connect("mongodb://localhost:27017/bipperDB");
-
+if(process.env.DEV_ENV) {
+  mongoose.connect("mongodb://localhost:27017/bipperDB");
+}
+else {
+  mongoose.connect("mongodb://ezdin:azerty111@ds159747.mlab.com:59747/bipperdb");
+}
 var index = require('./routes/index');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
