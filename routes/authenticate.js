@@ -17,6 +17,11 @@ module.exports = function(passport){
         res.send({state: 'failure', user: null, message: "Invalid username or password"});
     });
 
+    //sends failure register state back to angular
+    router.get('/regFailure', function(req, res){
+        res.send({state: 'failure', user: null, message: "Username already taken"});
+    });
+
     //log in
     router.post('/login', passport.authenticate('login', {
         successRedirect: '/auth/success',
@@ -26,7 +31,7 @@ module.exports = function(passport){
     //sign up
     router.post('/signup', passport.authenticate('signup', {
         successRedirect: '/auth/success',
-        failureRedirect: '/auth/failure'
+        failureRedirect: '/auth/regFailure'
     }));
 
     //log out

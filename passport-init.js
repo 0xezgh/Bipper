@@ -68,35 +68,36 @@ module.exports = function(passport){
         },
         function(req, username, password, done) {
 
-            //Checking if there's already a user with the entered username
-            Model.User.findOne({username: username}, function(err, user){
-
-                //in case there's a mongoDB error
+            // find a user in mongo with provided username
+            Model.User.findOne({ 'username' :  username }, function(err, user) {
+                // In case of any error, return using the done method
                 if (err){
-                    return done(err, false);
+                    console.log('Error in SignUp: '+err);
+                    return done(err);
                 }
-                //displaying a message if the username is taken
-                if (user){
-                    return done('username already taken', false);
-                }
+                // already exists
+                if (user) {
+                    console.log('User already exists with username: '+username);
+                    return done(null, false);
+                } else {
+                    // if there is no user, create the user
+                    var newUser = new Model.User();
 
+                    // set the user's local credentials
+                    newUser.username = username;
+                    newUser.password = createHash(password);
+
+                    // save the user
+                    newUser.save(function(err) {
+                        if (err){
+                            console.log('Error in Saving user: '+err);
+                            throw err;
+                        }
+                        console.log(newUser.username + ' Registration successful');
+                        return done(null, newUser);
+                    });
+                }
             });
-
-            //if not, we register the new user
-            var user = new Model.User();
-            //setting up the user's local credentials
-            user.username = req.body.username;
-            user.password = createHash(req.body.password);
-            //saving the user
-            user.save(function(err, user){
-
-                if (err){
-                    return done(err, false)
-                }
-                console.log('successfully registered user '+ username);
-                return done(null,user);
-            });
-
         })
     );
 

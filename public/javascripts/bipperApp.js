@@ -1,7 +1,7 @@
 /**
  * Created by mohamedezzedine on 08/12/2016.
  */
-var app = angular.module('bipperApp', ['ngRoute', 'ngResource']).run(function($rootScope,$http) {
+var app = angular.module('bipperApp', ['ngRoute', 'ngResource', 'ngCookies']).run(function($rootScope,$http) {
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
 
@@ -12,6 +12,7 @@ var app = angular.module('bipperApp', ['ngRoute', 'ngResource']).run(function($r
         $rootScope.current_user = '';
 
     };
+
 });
 
 app.config(function($routeProvider){
@@ -46,8 +47,8 @@ app.controller('mainController', function(beepService, $scope, $rootScope){
         $scope.newBeep.created_by = $rootScope.current_user;
         $scope.newBeep.created_at = Date.now();
         beepService.save($scope.newBeep, function(){
-            $scope.beeps = beepService.query();
-            $scope.newBeep = {created_by: '', text: '', created_at: ''};
+                    $scope.beeps = beepService.query();
+                    $scope.newBeep = {created_by: '', text: '', created_at: ''};
         });
     };
 });
@@ -79,6 +80,7 @@ app.controller('authController', function($scope, $http, $rootScope, $location){
                 $location.path('/');
             }
             else{
+                console.log(data.message);
                 $scope.error_message = data.message;
             }
         });
