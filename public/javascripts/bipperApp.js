@@ -1,7 +1,7 @@
 /**
  * Created by mohamedezzedine on 08/12/2016.
  */
-var app = angular.module('bipperApp', ['ngRoute', 'ngResource', 'ngCookies']).run(function($rootScope,$http) {
+var app = angular.module('bipperApp', ['ngRoute', 'ngResource']).run(function($rootScope,$http) {
     $rootScope.authenticated = false;
     $rootScope.current_user = '';
 
