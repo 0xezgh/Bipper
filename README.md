@@ -15,7 +15,7 @@ That's all
 
 Ps: session is not implemented, if you refresh the page while logged in you'll automatically be logged out.
 
-Ps2: to beep, you must be logged in/register if you are not.
+Ps2: to beep, you must be logged in (register if you don't have an account).
 
 Ps3: you can only delete and edit YOUR OWN BEEPS.
 
