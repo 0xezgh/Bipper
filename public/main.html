@@ -9,7 +9,8 @@
     <h4>Bipper Feed</h4>
     <div class="beep" ng-repeat="beep in beeps | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
         <p>{{beep.text}}</p>
+
         <small>Bipped by @{{beep.created_by}}</small>
-        <small class="pull-right">{{beep.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+        <small class="pull-right">{{beep.created_at | date:"h:mma 'on' MMM d, y"}}</small><a href="#/{{beep._id}}/edit" ng-show="current_user==beep.created_by" ng-click="edit(beep)"><span class="label label-info">Edit</span></a> <a href ng-click="remove(beep._id)" ng-show="current_user==beep.created_by"><span class="label label-danger">Delete</span></a>
     </div>
 </div>

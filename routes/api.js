@@ -23,6 +23,7 @@ function isAuthenticated (req, res, next) {
 
 //Register the authentication middleware
 router.use('/beeps', isAuthenticated);
+router.use('/beeps/:id', isAuthenticated);
 
 //api for all beeps (beeps are equivalent of tweets, posts, messages ...)
 router.route('/beeps')
@@ -68,19 +69,11 @@ router.route('/beeps/:id')
     })
     //updating an existing beep
     .put(function(req, res){
-        Model.Beep.findById(req.params.id, function(err, beep){
+        var obj = req.body;
+        Model.Beep.findByIdAndUpdate(req.params.id, {text: obj.text},function(err, beep){
             if(err)
                 res.send(err);
-
-            beep.created_by = req.body.created_by;
-            beep.text = req.body.text;
-
-            beep.save(function(err, beep){
-                if(err)
-                    res.send(err);
-
-                res.json(beep);
-            });
+            res.json(beep);
         });
     })
     //deleting an existing beep
@@ -90,7 +83,7 @@ router.route('/beeps/:id')
         }, function(err) {
             if (err)
                 res.send(err);
-            res.json("deleted :(");
+            res.json("deleted");
         });
     });
 

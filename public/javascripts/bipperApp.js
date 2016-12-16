@@ -17,9 +17,14 @@ var app = angular.module('bipperApp', ['ngRoute', 'ngResource']).run(function($r
 
 app.config(function($routeProvider){
     $routeProvider
-    //the timeline display
+        //the timeline display
         .when('/', {
             templateUrl: 'main.html',
+            controller: 'mainController'
+        })
+        //editing a beep
+        .when('/:id/edit', {
+            templateUrl: 'edit.html',
             controller: 'mainController'
         })
         //the login display
@@ -35,10 +40,14 @@ app.config(function($routeProvider){
 });
 
 app.factory('beepService', function($resource){
-    return $resource('/api/beeps/:id');
+    return $resource('/api/beeps/:_id', { _id: '@_id' },{
+        update: {
+            method: 'PUT'
+        }
+    });
 });
 
-app.controller('mainController', function(beepService, $scope, $rootScope){
+app.controller('mainController', function(beepService, $scope, $rootScope, $routeParams, $location){
     $scope.beeps = beepService.query();
     $scope.newBeep = {created_by: '', text: '', created_at: ''};
 
@@ -51,6 +60,29 @@ app.controller('mainController', function(beepService, $scope, $rootScope){
                     $scope.newBeep = {created_by: '', text: '', created_at: ''};
         });
     };
+
+
+    //deleting function
+    $scope.remove = function(_id) {
+        beepService.delete({_id:_id}, function(){
+            $scope.beeps = beepService.query();
+        });
+    };
+
+    //getting the beep to update
+    $scope.edit = function (beep){
+        $rootScope.editBeep = beepService.get({_id:beep._id}, function(){
+        });
+    };
+
+    //updating function
+    $scope.update = function(editBeep) {
+        beepService.update({_id:$routeParams.id,text:$scope.editBeep.text}, function(){
+        $scope.beeps = beepService.query();
+        });
+        $location.path('/');
+    };
+
 });
 
 app.controller('authController', function($scope, $http, $rootScope, $location){
