@@ -16,7 +16,6 @@ if(process.env.DEV_ENV) {
 else {
   mongoose.connect("mongodb://ezdin:azerty111@ds159747.mlab.com:59747/bipperdb");
 }
-mongoose.connect("mongodb://localhost:27017/bipperDB");
 var index = require('./routes/index');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
