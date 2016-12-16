@@ -1,5 +1,5 @@
 # Bipper
-Tiny application which allow you to register, login, and beep (post) some stuff
+Tiny application which allow you to register, login, beep (post) some stuff, edit and delete your beeps.
 
 Live Demo here : https://bipperapp.herokuapp.com
 
@@ -14,4 +14,6 @@ To run the app locally:
 That's all
 
 Ps: session is not implemented, if you refresh the page while logged in you'll automatically be logged out.
+Ps2: to beep, you must be logged in/register if you are not.
+Ps3: you can only delete and edit YOUR OWN BEEPS.
 
