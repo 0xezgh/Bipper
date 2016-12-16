@@ -10,12 +10,12 @@ var mongoose = require('mongoose');
 // Initialize models
 require('./models/models');
 //connection to mongoDB database
-/*if(process.env.DEV_ENV) {
+if(process.env.DEV_ENV) {
   mongoose.connect("mongodb://localhost:27017/bipperDB");
 }
 else {
   mongoose.connect("mongodb://ezdin:azerty111@ds159747.mlab.com:59747/bipperdb");
-}*/
+}
 mongoose.connect("mongodb://localhost:27017/bipperDB");
 var index = require('./routes/index');
 var api = require('./routes/api');
